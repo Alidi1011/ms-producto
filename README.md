@@ -1,4 +1,4 @@
-# Producto Service - Pacífico Seguros Challenge
+# Producto Service
 
 Microservicio reactivo con Spring WebFlux + R2DBC + H2.
 
