@@ -1,11 +1,14 @@
 package com.reto.pacifico.ms_producto.controller;
 
+import com.reto.pacifico.ms_producto.dto.ProductRequestDto;
+import com.reto.pacifico.ms_producto.mapper.ProductMapper;
 import com.reto.pacifico.ms_producto.model.Product;
 import com.reto.pacifico.ms_producto.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -16,6 +19,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
 
 @WebFluxTest(ProductController.class)
+@Import(ProductMapper.class)
 class ProductControllerTest {
 
     @Autowired
@@ -60,7 +64,7 @@ class ProductControllerTest {
 
         webTestClient.post()
                 .uri("/api/productos")
-                .bodyValue(productoSinId())
+                .bodyValue(request())
                 .exchange()
                 .expectStatus().isCreated()
                 .expectBody()
@@ -77,7 +81,7 @@ class ProductControllerTest {
 
         webTestClient.post()
                 .uri("/api/productos")
-                .bodyValue(productoSinId())
+                .bodyValue(request())
                 .exchange()
                 .expectStatus().isBadRequest()
                 .expectBody()
@@ -90,7 +94,7 @@ class ProductControllerTest {
 
         webTestClient.put()
                 .uri("/api/productos/{id}", 1)
-                .bodyValue(productoSinId())
+                .bodyValue(request())
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -102,7 +106,7 @@ class ProductControllerTest {
 
     @Test
     void actualizarProductoConPrecioInvalidoDevuelveBadRequest() {
-        Product productoInvalido = new Product(null, "SOAT", "Cobertura", 0.0, 10, true);
+        ProductRequestDto productoInvalido = new ProductRequestDto("SOAT", "Cobertura", 0.0, 10, true);
 
         webTestClient.put()
                 .uri("/api/productos/{id}", 1)
@@ -132,5 +136,9 @@ class ProductControllerTest {
 
     private Product productoSinId() {
         return new Product(null, "SOAT", "Cobertura", 120.0, 10, true);
+    }
+
+    private ProductRequestDto request() {
+        return new ProductRequestDto("SOAT", "Cobertura", 120.0, 10, true);
     }
 }

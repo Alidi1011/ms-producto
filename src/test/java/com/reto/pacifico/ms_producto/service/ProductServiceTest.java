@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
     @Mock ProductRepository repository;
-    @InjectMocks ProductService service;
+    @InjectMocks ProductServiceImpl service;
 
     @Test void listar() {
         when(repository.findByActivoTrue()).thenReturn(Flux.just(new Product(1L,"SOAT","x",120.0,10,true)));

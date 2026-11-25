@@ -2,6 +2,11 @@
 
 Microservicio reactivo con Spring WebFlux + R2DBC + H2.
 
+La capa HTTP utiliza `ProductRequestDto` para las solicitudes y `ProductResponseDto`
+para las respuestas. `Product` queda reservado para el modelo persistido; `ProductMapper`
+se encarga de convertir entre los DTOs y el modelo. El controlador depende del contrato
+`ProductService`, implementado por `ProductServiceImpl`.
+
 ## Ejecutar con Docker
 
 # 1. Primero construyes el jar
