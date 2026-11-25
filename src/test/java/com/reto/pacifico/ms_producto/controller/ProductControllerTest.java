@@ -17,6 +17,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.containsString;
 
 @WebFluxTest(ProductController.class)
 @Import(ProductMapper.class)
@@ -113,6 +115,24 @@ class ProductControllerTest {
                 .bodyValue(productoInvalido)
                 .exchange()
                 .expectStatus().isBadRequest();
+
+        verifyNoInteractions(service);
+    }
+
+    @Test
+    void crearProductoResumeTodasLasValidaciones() {
+        ProductRequestDto productoInvalido = new ProductRequestDto("", null, null, -1, true);
+
+        webTestClient.post()
+                .uri("/api/productos")
+                .bodyValue(productoInvalido)
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody()
+                .jsonPath("$.error").value(allOf(
+                        containsString("nombre:"),
+                        containsString("precio:"),
+                        containsString("stock:")));
 
         verifyNoInteractions(service);
     }

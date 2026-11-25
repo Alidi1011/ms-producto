@@ -3,7 +3,6 @@ package com.reto.pacifico.ms_producto.controller;
 import com.reto.pacifico.ms_producto.dto.ProductRequestDto;
 import com.reto.pacifico.ms_producto.dto.ProductResponseDto;
 import com.reto.pacifico.ms_producto.mapper.ProductMapper;
-import com.reto.pacifico.ms_producto.model.Product;
 import com.reto.pacifico.ms_producto.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

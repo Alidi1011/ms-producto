@@ -8,8 +8,6 @@ se encarga de convertir entre los DTOs y el modelo. El controlador depende del c
 `ProductService`, implementado por `ProductServiceImpl`.
 
 ## Ejecutar con Docker
-
-# 1. Primero construyes el jar
 ./mvnw clean package -DskipTests
 docker compose up --build
 

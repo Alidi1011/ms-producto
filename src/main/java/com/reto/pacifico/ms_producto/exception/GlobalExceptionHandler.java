@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import reactor.core.publisher.Mono;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -14,8 +15,10 @@ public class GlobalExceptionHandler {
     public Mono<ResponseEntity<Map<String,String>>> handleValidation(WebExchangeBindException ex) {
         String message = ex.getFieldErrors().stream()
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
-                .findFirst()
-                .orElse("Solicitud inválida");
+                .collect(Collectors.joining("; "));
+        if (message.isEmpty()) {
+            message = "Solicitud inválida";
+        }
         return Mono.just(ResponseEntity.badRequest().body(Map.of("error", message)));
     }
 
