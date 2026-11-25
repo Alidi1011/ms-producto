@@ -2,6 +2,7 @@ package com.reto.pacifico.ms_producto.controller;
 
 import com.reto.pacifico.ms_producto.model.Product;
 import com.reto.pacifico.ms_producto.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +23,10 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Product> crear(@RequestBody Product p) { return service.crear(p); }
+    public Mono<Product> crear(@Valid @RequestBody Product p) { return service.crear(p); }
 
     @PutMapping("/{id}")
-    public Mono<Product> actualizar(@PathVariable Long id, @RequestBody Product p) {
+    public Mono<Product> actualizar(@PathVariable Long id, @Valid @RequestBody Product p) {
         return service.actualizar(id, p);
     }
 

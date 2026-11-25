@@ -9,5 +9,5 @@ CREATE TABLE IF NOT EXISTS productos (
 
 INSERT INTO productos (nombre, descripcion, precio, stock, activo) VALUES
 ('Seguro SOAT', 'Cobertura obligatoria accidentes', 120.0, 100, TRUE),
-('Seguro Vehicular', 'Cobertura todo riesgo', 850.0, 50, TRUE);
+('Seguro Vehicular', 'Cobertura todo riesgo', 850.0, 50, TRUE),
 ('Seguro Salud', 'Cobertura todo accidentes ', 250.0, 30, TRUE);

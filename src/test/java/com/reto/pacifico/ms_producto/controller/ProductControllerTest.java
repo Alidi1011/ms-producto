@@ -11,6 +11,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
 
@@ -97,6 +98,19 @@ class ProductControllerTest {
                 .jsonPath("$.nombre").isEqualTo("SOAT");
 
         verify(service).actualizar(1L, productoSinId());
+    }
+
+    @Test
+    void actualizarProductoConPrecioInvalidoDevuelveBadRequest() {
+        Product productoInvalido = new Product(null, "SOAT", "Cobertura", 0.0, 10, true);
+
+        webTestClient.put()
+                .uri("/api/productos/{id}", 1)
+                .bodyValue(productoInvalido)
+                .exchange()
+                .expectStatus().isBadRequest();
+
+        verifyNoInteractions(service);
     }
 
     @Test
